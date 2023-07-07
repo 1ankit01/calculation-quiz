@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>multipliction app</title>
+	<style type="text/css">
+		body{
+			margin: 0;
+			display: flex;
+			justify-content: center;
+			height: 100vh;
+			align-items: center;
+			text-align: center;
+			background-color: goldenrod;
+			font-family: cursive;
+		}
+		.form{
+			background-color: cornflowerblue;
+			padding: 20px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+			margin: 10px;
+			border-radius: 10px;
+		}
+		.input{
+			display: block;
+			width: 100%;
+			box-sizing: border-box;
+			font-size: 25px;
+			text-align: center;
+			padding: 10px;
+			border: solid 4px green;
+			color: green;
+		}
+		.input::placeholder{
+			color: lightblue;
+			font-family: cursive;
+		}
+		.btn{
+			background-color: goldenrod;
+			color: white;
+			border: none;
+			display: block;
+			width: 100%;
+			padding: 10px;
+			font-size: 20px;
+			font-family: cursive;
+			margin: 20px 0;
+			border-radius: 5px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+			cursor: pointer;
+		}
+		.btn:hover{
+			filter: brightness(0.9);
+		}
+		.score{
+			color: green;
+			text-align: right;
+		}
+	</style>
+</head>
+<body>
+	<form class="form" id="form">
+		<h4 class="score" id="score">score: 0</h4>
+		<h1 id="question"> what is 1 multiply by 1?</h1>
+		<input type="text" class="input" id="input" placeholder="Enter your answer" autofocus autocomplete="off">
+		<button type="submit" class="btn">submit</button>
+	</form>
+	<script type="text/javascript">
+		const num1= Math.ceil(Math.random()*25)
+		const num2= Math.ceil(Math.random()*10)
+
+		const questionE1 = document.getElementById("question");
+
+		const inputE1 = document.getElementById("input");
+
+		const formE1 = document.getElementById("form");
+
+		const scoreE1=document.getElementById("score");
+
+		let score =JSON.parse(localStorage.getItem("score"));
+		if (!score){
+			score=0;
+		}
+		scoreE1.innerText=`score: ${score}`
+
+		questionE1.innerText = `what is ${num1}multiply by ${num2}?`;
+
+		const correctAns = num1 * num2;
+
+		formE1.addEventListener("submit",()=>{
+			const userAns = +inputE1.value
+			if(userAns===correctAns){
+				score++;
+				updateLocalStorage();
+				scoreE1.innerText = `Score : ${score}`
+			}
+			else{
+				score--;
+				updateLocalStorage();
+				scoreE1.innerText = `Score : ${score} `;
+			}
+		});	
+
+		function updateLocalStorage(){
+			localStorage.setItem("score",JSON.stringify(score))
+		}
+	</script>
+</body>
+</html>
